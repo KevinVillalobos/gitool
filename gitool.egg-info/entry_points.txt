@@ -1,0 +1,2 @@
+[console_scripts]
+gitool = gitool.main:cli

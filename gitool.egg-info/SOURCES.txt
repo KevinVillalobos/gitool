@@ -1,0 +1,15 @@
+pyproject.toml
+gitool/main.py
+gitool.egg-info/PKG-INFO
+gitool.egg-info/SOURCES.txt
+gitool.egg-info/dependency_links.txt
+gitool.egg-info/entry_points.txt
+gitool.egg-info/requires.txt
+gitool.egg-info/top_level.txt
+gitool/commands/__init__.py
+gitool/commands/repos.py
+gitool/core/__init__.py
+gitool/core/config.py
+gitool/core/git.py
+gitool/ui/__init__.py
+gitool/ui/display.py
