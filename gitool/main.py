@@ -1,5 +1,6 @@
 import click
 from .commands.repos import repos
+from .commands.commit import commit
 
 @click.group()
 def cli():
@@ -7,3 +8,4 @@ def cli():
     pass
 
 cli.add_command(repos)
+cli.add_command(commit)

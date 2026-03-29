@@ -9,18 +9,18 @@ console = Console()
 
 @click.group()
 def repos():
-    """Gestiona todos tus repositorios locales."""
+    """Show all Local Repos."""
     pass
 
 @repos.command("list")
 def list_repos():
-    """Muestra todos tus repos en una tabla."""
+    """Show all repos in a table."""
     cfg = get_config()
-    console.print(f"\n[dim]Buscando repos en:[/dim] {cfg['base_path']}\n")
+    console.print(f"\n[dim]Looking...:[/dim] {cfg['base_path']}\n")
     all_repos = find_all_repos(cfg["base_path"])
 
     if not all_repos:
-        console.print("[yellow]No encontré repos. Usa 'gitool repos set-path' para configurar tu carpeta.[/yellow]")
+        console.print("[yellow]Could not find repos. Use 'gitool repos set-path' to set path.[/yellow]")
         return
 
     repos_data = []
@@ -36,20 +36,20 @@ def list_repos():
             continue
 
     console.print(make_repos_table(repos_data))
-    console.print(f"\n[dim]{len(repos_data)} repo(s) encontrado(s)[/dim]\n")
+    console.print(f"\n[dim]{len(repos_data)} record(s) found[/dim]\n")
 
 @repos.command("status")
 def status_repos():
-    """Muestra solo los repos con cambios pendientes."""
+    """Show only repos with pending changes."""
     cfg = get_config()
     all_repos = find_all_repos(cfg["base_path"])
     dirty = [r for r in all_repos if r.is_dirty(untracked_files=True)]
 
     if not dirty:
-        console.print("[green]Todo limpio. No hay cambios pendientes.[/green]")
+        console.print("[green]All OK no pending changes.[/green]")
         return
 
-    console.print(f"\n[yellow]{len(dirty)} repo(s) con cambios:[/yellow]\n")
+    console.print(f"\n[yellow]{len(dirty)} modified repo(s):[/yellow]\n")
     for repo in dirty:
         name = Path(repo.working_dir).name
         branch = repo.active_branch.name
@@ -59,13 +59,13 @@ def status_repos():
 @repos.command("set-path")
 @click.argument("path")
 def set_path(path):
-    """Configura la carpeta base donde están tus repos."""
+    """Configure path to repo."""
     from pathlib import Path as P
     p = P(path)
     if not p.exists():
-        console.print(f"[red]La carpeta no existe:[/red] {path}")
+        console.print(f"[red] Doesnt exist:[/red] {path}")
         return
     cfg = get_config()
     cfg["base_path"] = str(p.resolve())
     save_config(cfg)
-    console.print(f"[green]Ruta guardada:[/green] {cfg['base_path']}")
+    console.print(f"[green]Route saved:[/green] {cfg['base_path']}")
